@@ -1,0 +1,16 @@
+{
+  "name": "startup-similarity-checker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "build:corpus": "node server/scripts/buildCorpus.js",
+    "validate": "node server/scripts/validateCorpus.js",
+    "test:search": "node server/scripts/foodDeliveryTest.js"
+  },
+  "dependencies": {
+    "@xenova/transformers": "^2.17.2",
+    "csv-parse": "^5.5.6",
+    "express": "^5.3.0"
+  }
+}
