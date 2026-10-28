@@ -1,4 +1,5 @@
 // AI Insight: explains the similarity results in plain language.
+
 const fs = require('fs');
 const path = require('path');
 
