@@ -1,12 +1,4 @@
 // AI Insight: explains the similarity results in plain language.
-//
-// The matching code in server.js is NOT touched. This file only receives the idea and the
-// 5 matches that /api/analyze already returned, asks an LLM to explain them, and sends back
-// three short parts. If no API key is set (or the AI call fails) it returns a clearly
-// labelled rule-based summary instead, so the demo never breaks.
-//
-// API keys live in a .env file in the project root (never in the browser, never in git).
-
 const fs = require('fs');
 const path = require('path');
 
@@ -36,7 +28,8 @@ function loadEnvFile() {
 const PROVIDERS = {
     gemini: {
         keyVar: 'GEMINI_API_KEY',
-        defaultModel: 'gemini-2.5-flash',
+        defaultModel: 'gemini-3.8-flash',
+        backupModels: ['gemini-3.5-flash-lite', 'gemini-3.5-flash'],
         label: 'Google Gemini'
     },
     anthropic: {
@@ -84,10 +77,32 @@ function buildUserPrompt(input) {
     ].join('\n');
 }
 
-async function callProvider(name, userPrompt) {
+// Every model we may try, in order: the chosen provider's main model and its backups, then any
+// OTHER provider that also has a key in .env (a different company's servers are rarely busy at the same time).
+// Set INSIGHT_FALLBACK_MODELS="a,b" to change the backups of the first provider.
+function attemptList() {
+    const first = pickProvider();
+    if (!first) return [];
+    const forced = (process.env.INSIGHT_PROVIDER || '').toLowerCase();
+    const names = [first];
+    if (!(forced && PROVIDERS[forced])) {
+        Object.keys(PROVIDERS).forEach((n) => { if (n !== first && process.env[PROVIDERS[n].keyVar]) names.push(n); });
+    }
+    const list = [];
+    names.forEach((n, i) => {
+        const main = (i === 0 && process.env.INSIGHT_MODEL) || PROVIDERS[n].defaultModel;
+        const backups = i === 0 && process.env.INSIGHT_FALLBACK_MODELS
+            ? process.env.INSIGHT_FALLBACK_MODELS.split(',').map((x) => x.trim()).filter(Boolean)
+            : (PROVIDERS[n].backupModels || []);
+        [main, ...backups.filter((m) => m !== main)].forEach((m) => list.push({ provider: n, model: m }));
+    });
+    return list;
+}
+
+async function callProvider(name, userPrompt, modelName) {
     const cfg = PROVIDERS[name];
     const key = process.env[cfg.keyVar];
-    const model = process.env.INSIGHT_MODEL || cfg.defaultModel;
+    const model = modelName || process.env.INSIGHT_MODEL || cfg.defaultModel;
     const signal = AbortSignal.timeout(25000);
 
     if (name === 'anthropic') {
@@ -250,7 +265,7 @@ module.exports = function registerInsight(app) {
     loadEnvFile();
     const provider = pickProvider();
     console.log(provider
-        ? `AI Insight: using ${PROVIDERS[provider].label} (${process.env.INSIGHT_MODEL || PROVIDERS[provider].defaultModel})`
+        ? `AI Insight: using ${PROVIDERS[provider].label} (${process.env.INSIGHT_MODEL || PROVIDERS[provider].defaultModel}), ${attemptList().length} models in the backup chain`
         : 'AI Insight: no API key found in .env, using the rule-based summary');
 
     app.post('/api/insight', async (req, res) => {
@@ -258,15 +273,28 @@ module.exports = function registerInsight(app) {
         if (!input) return res.status(400).json({ error: 'invalid insight request' });
         if (overLimit()) return res.status(429).json({ error: 'Too many requests. Please wait a minute and try again.' });
 
-        const name = pickProvider();   // re-check so editing .env + restart is the only step needed
-        if (name) {
+        const attempts = attemptList();   // re-read .env keys so editing .env + restart is the only step needed
+        if (attempts.length) {
             try {
-                const text = await callProvider(name, buildUserPrompt(input));
-                const insight = parseInsight(text);
-                if (insight) {
-                    return res.json({ source: 'ai', provider: PROVIDERS[name].label, ...insight });
+                // A busy model (503) or a slow one (timeout) usually has a quieter sibling,
+                // so the user still gets AI text instead of the fixed summary.
+                const prompt = buildUserPrompt(input);
+                const skipped = new Set();   // providers whose key / request was rejected
+                for (const at of attempts) {
+                    if (skipped.has(at.provider)) continue;
+                    try {
+                        const text = await callProvider(at.provider, prompt, at.model);
+                        const insight = parseInsight(text);
+                        if (insight) {
+                            return res.json({ source: 'ai', provider: PROVIDERS[at.provider].label, ...insight });
+                        }
+                        console.error('AI Insight: ' + at.model + ' reply could not be parsed:', String(text).slice(0, 200));
+                    } catch (err) {
+                        console.error('AI Insight: ' + at.provider + '/' + at.model + ' failed (' + err.message + ')');
+                        // 400/401/403 = bad key or request, so this provider's other models cannot help (404, 429, 5xx, timeouts can)
+                        if (/API error 4(?!04|29)\d\d/.test(err.message)) skipped.add(at.provider);
+                    }
                 }
-                console.error('AI Insight: could not parse the model reply:', String(text).slice(0, 200));
             } catch (err) {
                 console.error('AI Insight failed:', err.message);
             }
