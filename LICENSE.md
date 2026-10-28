@@ -1,4 +1,4 @@
-Copyright (c) 2026 Aryan Bhardwaj. All Rights Reserved.
+Copyright (c) 2026 Aryan Bhardwaj and Krishna Rawat. All Rights Reserved.
 
 This source code is made publicly visible for viewing and evaluation only
 (for example: portfolio review, recruitment and academic assessment).
@@ -14,4 +14,4 @@ public/vendor/pdfjs/LICENSE.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
 
-Contact: aryanwibhardwaj@gmail.com
+
