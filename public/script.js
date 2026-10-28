@@ -1,4 +1,3 @@
-
 console.log("JavaScript connected");
 
 const titleInput = document.getElementById("startup-title");
@@ -434,7 +433,7 @@ const exampleIdeas = {
     }
 };
 
-
+// Keep the character counter updated as the user types.
 if (descriptionInput) {
     descriptionInput.addEventListener(
         "input",
@@ -512,6 +511,7 @@ function renderInsightPanel(formData, result) {
 
             const data = await response.json();
 
+            // The user may have run a new analysis while we waited.
             if (!panel.isConnected) return;
 
             body.className = "insight-body";
@@ -530,7 +530,7 @@ function renderInsightPanel(formData, result) {
                 "p",
                 isAi ? "insight-foot" : "insight-foot is-fallback",
                 isAi
-                    ? "Written by " + (data.provider || "an AI model") + " from your idea and the matches above. AI can make mistakes, so use it as a starting point."
+                    ? "Written by AI from your idea and the matches above. AI can make mistakes, so use it as a starting point."
                     : (data.reason || "This is a rule-based summary.") + (data.noKey ? " Add an API key to the .env file to get AI-written insight." : " Please try again in a moment.")
             ));
 
@@ -552,7 +552,7 @@ function renderInsightPanel(formData, result) {
     });
 }
 
-
+// Handle form submission and communicate with the backend.
 if (form) {
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
@@ -621,7 +621,9 @@ if (form) {
     });
 }
 
-
+// ---------- Upload a description from a file (.txt, .md or .pdf) ----------
+// Everything happens in the browser. Nothing is sent to the server until you press
+// Analyze, and the same validation as typed text still applies.
 const MAX_DESCRIPTION = 1000;            // keep in sync with the textarea maxlength
 const MAX_TEXT_BYTES = 200 * 1024;       // 200 KB is far more than 1,000 characters needs
 const MAX_PDF_BYTES = 5 * 1024 * 1024;   // 5 MB
@@ -631,7 +633,8 @@ const fileInput = document.getElementById("idea-file");
 const uploadTrigger = document.getElementById("upload-trigger");
 const uploadStatus = document.getElementById("upload-status");
 
-
+// Each upload gets a number. If you pick a second file while the first is still being
+// read, the older one notices it is out of date and stops instead of overwriting.
 let uploadToken = 0;
 
 function setUploadStatus(message, kind) {
@@ -643,7 +646,7 @@ function setUploadStatus(message, kind) {
         : "upload-status";
 }
 
-
+// Decide what kind of file this is from its name (type is often empty for .md).
 function fileKind(file) {
     const name = file.name.toLowerCase();
 
@@ -662,7 +665,8 @@ function fileKind(file) {
     return null;
 }
 
-
+// pdf.js is about 1.8 MB, so it is only downloaded the first time someone picks a PDF.
+// The files live in public/vendor/pdfjs, so this works offline too.
 let pdfjsPromise = null;
 
 function loadPdfJs() {
@@ -676,9 +680,9 @@ function loadPdfJs() {
                 return lib;
             })
             .catch(function (error) {
-                pdfjsPromise = null;   
+                pdfjsPromise = null;   // allow another attempt next time
 
-                
+                // Turn the browser's vague "failed to fetch module" into something we can explain.
                 const missing = new Error("The PDF reader files could not be loaded");
                 missing.name = "PdfLibraryMissing";
                 missing.cause = error;
@@ -689,11 +693,13 @@ function loadPdfJs() {
     return pdfjsPromise;
 }
 
-
+// Read the text out of the first pages of a PDF.
 async function extractPdfText(file) {
     const pdfjs = await loadPdfJs();
     const data = new Uint8Array(await file.arrayBuffer());
 
+    // isEvalSupported:false switches off a pdf.js feature that is not needed here
+    // and that has been abused by hostile PDFs in the past.
     const pdf = await pdfjs.getDocument({ data, isEvalSupported: false }).promise;
 
     try {
@@ -709,7 +715,7 @@ async function extractPdfText(file) {
                 .join("") + " ";
         }
 
-      
+        // PDFs break lines wherever the layout needs, so flatten all whitespace.
         return text.replace(/\s+/g, " ").trim();
     } finally {
         pdf.destroy();
@@ -718,7 +724,7 @@ async function extractPdfText(file) {
 
 function uploadErrorMessage(error, kind) {
     if (kind === "pdf") {
-       
+        // The worker file is loaded later than the main file, so check its error text too.
         if (error && (error.name === "PdfLibraryMissing" || /worker/i.test(String(error.message)))) {
             return "PDF reader files not found. Check that public/vendor/pdfjs/ contains pdf.min.mjs and pdf.worker.min.mjs (same spelling), then reload with Ctrl+F5.";
         }
@@ -737,10 +743,10 @@ function uploadErrorMessage(error, kind) {
     return "Could not read that file. Please try again.";
 }
 
-
+// Put the extracted text into the box, with the 1,000 character limit applied.
 function applyUploadedText(rawText, fileName, kind) {
     let text = rawText
-        .replace(/^\uFEFF/, "")        
+        .replace(/^\uFEFF/, "")        // invisible byte-order mark some editors add
         .replace(/\r\n?/g, "\n")
         .trim();
 
@@ -805,7 +811,7 @@ async function loadDescriptionFile(file) {
             ? await extractPdfText(file)
             : await file.text();
 
-        if (token !== uploadToken) return;   
+        if (token !== uploadToken) return;   // a newer upload has started
 
         applyUploadedText(rawText, file.name, kind);
     } catch (error) {
@@ -823,11 +829,11 @@ if (fileInput && uploadTrigger) {
 
     fileInput.addEventListener("change", function () {
         loadDescriptionFile(fileInput.files[0]);
-        fileInput.value = "";   
+        fileInput.value = "";   // lets you pick the same file again later
     });
 }
 
-
+// Drag a file onto the text box. Plain text drags still work as normal.
 function dragHasFiles(event) {
     return event.dataTransfer
         && Array.from(event.dataTransfer.types || []).includes("Files");
@@ -855,7 +861,7 @@ if (descriptionInput) {
     });
 }
 
-
+// Make the example buttons populate the form.
 document
     .querySelectorAll(".example-chip[data-example]")
     .forEach((button) => {
