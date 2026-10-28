@@ -1,7 +1,4 @@
-/* ==============================
-   Startup Idea Analyzer — V2
-   Light sky-blue design system
-   ============================== */
+
 
 :root {
     color-scheme: light;
@@ -2213,4 +2210,12 @@ main { overflow-x: clip; }
 @keyframes insight-in {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Explains why the card order can differ slightly from the similarity values */
+.rank-note {
+    margin: -8px 0 17px;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
 }
