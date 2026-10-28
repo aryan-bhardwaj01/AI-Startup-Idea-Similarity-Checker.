@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f3f9ff">
+    <meta name="description" content="Compare your startup idea with Y Combinator startups using semantic similarity and explore the closest matches.">
+    <title>Startup Idea Analyzer</title>
+    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+        <nav class="site-nav page-container" aria-label="Main navigation">
+            <a class="brand" href="#home" aria-label="Startup Idea Analyzer home">
+                <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+                <span class="brand-name">Startup <strong>Analyzer</strong></span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#how-it-works">How it works</a>
+                <a href="#analyzer">Analyze an idea</a>
+            </div>
+
+            <a class="nav-cta" href="#analyzer">Get started <span aria-hidden="true">↗</span></a>
+        </nav>
+    </header>
+
+    <main id="main-content">
+        <section class="hero-section page-container" id="home" aria-labelledby="hero-title">
+            <div class="hero-copy">
+                <div class="eyebrow"><span class="eyebrow-dot"></span> A clearer starting point for your next big idea</div>
+                <h1 id="hero-title">See where your startup idea <span>stands out.</span></h1>
+                <p class="hero-description">
+                    Explore startups with ideas similar to yours. Use meaning-based matching to understand the landscape before you take your next step.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="button button-primary" href="#analyzer">Analyze your idea <span aria-hidden="true">→</span></a>
+                    <a class="button button-secondary" href="#how-it-works">Explore the process</a>
+                </div>
+
+                <div class="hero-proof" aria-label="Project highlights">
+                    <div class="proof-item">
+                        <span class="proof-icon" aria-hidden="true">✳</span>
+                        <span><strong>5,625</strong><small>YC startups</small></span>
+                    </div>
+                    <span class="proof-divider" aria-hidden="true"></span>
+                    <div class="proof-item">
+                        <span class="proof-icon proof-icon-orange" aria-hidden="true">≈</span>
+                        <span><strong>Meaning-based</strong><small>Idea comparison</small></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-art" role="group" aria-label="Illustrative preview of a startup comparison result">
+                <div class="art-orb art-orb-one" aria-hidden="true"></div>
+                <div class="art-orb art-orb-two" aria-hidden="true"></div>
+
+                <!-- Orbiting balls: .orbit rotates around the card, .ball-surface spins on its own axis -->
+                <div class="orbit orbit-blue" aria-hidden="true"><span class="ball"><span class="ball-surface"></span></span></div>
+                <div class="orbit orbit-orange" aria-hidden="true"><span class="ball"><span class="ball-surface"></span></span></div>
+
+                <div class="preview-stage">
+                    <div class="floating-note floating-note-top"><span class="note-icon">✦</span> Beyond keyword search</div>
+
+                    <div class="preview-window glass-panel">
+                        <div class="preview-window-bar">
+                            <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+                            <span class="preview-label">ILLUSTRATIVE PREVIEW</span>
+                        </div>
+                        <div class="preview-content">
+                            <div class="preview-kicker">YOUR STARTUP IDEA</div>
+                            <div class="preview-project-row">
+                                <div class="preview-project-icon" aria-hidden="true">Q</div>
+                                <div>
+                                    <strong>QuickBite</strong>
+                                    <p>Local food delivery</p>
+                                </div>
+                                <span class="preview-mini-tag">Example</span>
+                            </div>
+
+                            <div class="preview-divider"><span>Closest match</span></div>
+
+                            <div class="preview-match-row">
+                                <div class="preview-match-logo" aria-hidden="true">B</div>
+                                <div class="preview-match-details">
+                                    <strong>BiteSight</strong>
+                                    <span>Food discovery and delivery</span>
+                                </div>
+                                <strong class="preview-similarity">0.49</strong>
+                            </div>
+                            <div class="preview-meter" aria-hidden="true"><span></span></div>
+                            <div class="preview-footer"><span>Similarity score</span><span>Illustrative data</span></div>
+                        </div>
+                    </div>
+
+                    <div class="floating-note floating-note-bottom"><span class="status-pip"></span> Compare ideas by meaning</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="workflow-section section-space" id="how-it-works" aria-labelledby="workflow-title">
+            <div class="page-container">
+                <div class="section-heading section-heading-centered">
+                    <span class="section-kicker">A SIMPLE PROCESS</span>
+                    <h2 id="workflow-title">From first thought to clearer insight</h2>
+                    <p>Four straightforward stages help you understand where your idea fits.</p>
+                </div>
+
+                <div class="workflow-grid">
+                    <article class="workflow-step">
+                        <span class="step-number">01</span>
+                        <div class="step-copy">
+                            <span class="step-label">YOUR INPUT</span>
+                            <h3>Describe your idea</h3>
+                            <p>Share the problem, your solution, and the people it is designed to help.</p>
+                        </div>
+                    </article>
+                    <article class="workflow-step">
+                        <span class="step-number">02</span>
+                        <div class="step-copy">
+                            <span class="step-label">SEMANTIC ANALYSIS</span>
+                            <h3>Analyze the meaning</h3>
+                            <p>Your description is compared by meaning, rather than relying only on matching keywords.</p>
+                        </div>
+                    </article>
+                    <article class="workflow-step">
+                        <span class="step-number">03</span>
+                        <div class="step-copy">
+                            <span class="step-label">DISCOVER</span>
+                            <h3>Explore similar startups</h3>
+                            <p>Review the closest matches found in the available Y Combinator startup dataset.</p>
+                        </div>
+                    </article>
+                    <article class="workflow-step">
+                        <span class="step-number">04</span>
+                        <div class="step-copy">
+                            <span class="step-label">YOUR TAKEAWAY</span>
+                            <h3>Understand the results</h3>
+                            <p>Use the similarity scores and estimated novelty as a starting point for further research.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="analyzer-section section-space" id="analyzer" aria-labelledby="analyzer-title">
+            <div class="page-container">
+                <div class="analyzer-intro">
+                    <div>
+                        <span class="section-kicker">LET'S EXPLORE YOUR IDEA</span>
+                        <h2 id="analyzer-title">Put your idea into context.</h2>
+                    </div>
+                    <p>Start with a clear description. The more specific you are about the problem and solution, the more useful the comparison can be.</p>
+                </div>
+
+                <div class="analyzer-layout">
+                    <div class="form-card glass-panel">
+                        <div class="form-card-heading">
+                            <div class="form-card-icon" aria-hidden="true"><span>✳</span></div>
+                            <div>
+                                <h3>Startup details</h3>
+                                <p>Tell us what you are building.</p>
+                            </div>
+                            <span class="required-note">* Required</span>
+                        </div>
+
+                        <form id="startup-form" novalidate>
+                            <div class="form-field">
+                                <label for="startup-title">Startup title <span aria-hidden="true">*</span></label>
+                                <input
+                                    class="custom-input"
+                                    type="text"
+                                    id="startup-title"
+                                    name="startupTitle"
+                                    placeholder="e.g. QuickBite"
+                                    autocomplete="off"
+                                    required
+                                >
+                                <small class="field-hint">A short, memorable name for your idea.</small>
+                            </div>
+
+                            <div class="form-field">
+                                <div class="field-label-row">
+                                    <label for="startup-description">Describe your startup idea <span aria-hidden="true">*</span></label>
+                                    <span class="field-required-text">Be clear and specific</span>
+                                </div>
+                                <textarea
+                                    class="custom-textarea"
+                                    name="startupDescription"
+                                    id="startup-description"
+                                    rows="6"
+                                    maxlength="1000"
+                                    placeholder="What problem are you solving? How does your solution work, and who will use it?"
+                                    aria-describedby="description-hint description-count"
+                                    required
+                                ></textarea>
+                                <div class="textarea-meta">
+                                    <small class="field-hint" id="description-hint">Focus on the problem, solution, and target users.</small>
+                                    <span class="character-count" id="description-count" aria-live="polite">0 / 1,000</span>
+                                </div>
+
+                                <div class="upload-row">
+                                    <input type="file" id="idea-file" accept=".txt,.md,.markdown,.pdf,text/plain,text/markdown,application/pdf" hidden>
+                                    <button class="upload-btn" id="upload-trigger" type="button">
+                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M5 20h14"/></svg>
+                                        Upload a .txt, .md or .pdf file
+                                    </button>
+                                    <span class="upload-hint">or drop a file onto the text box</span>
+                                    <span class="upload-status" id="upload-status" aria-live="polite"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="select-domain">Industry domain <span aria-hidden="true">*</span></label>
+                                <select class="custom-domain" name="domain" id="select-domain" required>
+                                    <option value="">Choose the closest domain</option>
+                                    <option value="agriculture">Agriculture</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="education">Education</option>
+                                    <option value="cybersecurity">Cybersecurity</option>
+                                    <option value="finance">Finance &amp; FinTech</option>
+                                    <option value="e-commerce">E-Commerce &amp; Retail</option>
+                                    <option value="social">Social &amp; Communication</option>
+                                    <option value="environment">Environment &amp; Sustainability</option>
+                                    <option value="transportation">Transportation &amp; Logistics</option>
+                                    <option value="media">Entertainment &amp; Media</option>
+                                </select>
+                                <small class="field-hint">Choose the sector that best describes your idea.</small>
+                            </div>
+
+                            <div class="form-actions">
+                                <button class="custom-button button button-primary" type="submit">
+                                    <span id="analyze-button-label">Analyze idea</span> <span aria-hidden="true">→</span>
+                                </button>
+                                <span class="form-action-note"><span aria-hidden="true">↳</span> Usually takes a few moments</span>
+                            </div>
+                        </form>
+
+                        <div id="error-box" class="error-box" role="alert" aria-live="polite"></div>
+                    </div>
+
+                    <aside class="guidance-column" aria-label="Tips for a useful startup description">
+                        <div class="guidance-card guidance-card-blue">
+                            <div class="guidance-icon" aria-hidden="true">✦</div>
+                            <span class="guidance-eyebrow">A HELPFUL TIP</span>
+                            <h3>Describe the value, not just the features.</h3>
+                            <p>Explain the problem people face, how your idea solves it, and who benefits. A short, focused description is a strong starting point.</p>
+                            <div class="guidance-rule"></div>
+                            <div class="guidance-mini-points">
+                                <span><i>01</i> The problem</span>
+                                <span><i>02</i> Your solution</span>
+                                <span><i>03</i> Your users</span>
+                            </div>
+                        </div>
+
+                        <div class="examples-card">
+                            <div class="examples-heading">
+                                <div>
+                                    <span class="section-kicker">NEED A START?</span>
+                                    <h3>Try an example</h3>
+                                </div>
+                                <span class="examples-spark" aria-hidden="true">✧</span>
+                            </div>
+                            <p>Choose an example to fill in the form, then edit it to make it your own.</p>
+                            <div class="example-list">
+                                <button class="example-chip" type="button" data-example="food">
+                                    <span class="example-chip-icon" aria-hidden="true">↗</span>
+                                    <span><strong>QuickBite</strong><small>Food delivery</small></span>
+                                    <span class="example-arrow" aria-hidden="true">→</span>
+                                </button>
+                                <button class="example-chip" type="button" data-example="education">
+                                    <span class="example-chip-icon example-chip-icon-blue" aria-hidden="true">◎</span>
+                                    <span><strong>StudyBuddy</strong><small>Student learning</small></span>
+                                    <span class="example-arrow" aria-hidden="true">→</span>
+                                </button>
+                                <button class="example-chip" type="button" data-example="environment">
+                                    <span class="example-chip-icon example-chip-icon-green" aria-hidden="true">↻</span>
+                                    <span><strong>OilLoop</strong><small>Recycling</small></span>
+                                    <span class="example-arrow" aria-hidden="true">→</span>
+                                </button>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+
+                <div id="results-section" aria-live="polite" aria-label="Startup analysis results"></div>
+            </div>
+        </section>
+
+        <section class="scope-note-section page-container" aria-label="Dataset scope and limitation">
+            <div class="scope-note">
+                <span class="scope-note-icon" aria-hidden="true">i</span>
+                <p><strong>A useful starting point, not a final verdict.</strong> Results are based on the available Y Combinator startup dataset. The novelty score is an estimate and does not prove that an idea has no competitors.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="page-container footer-inner">
+            <a class="brand footer-brand" href="#home">
+                <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+                <span class="brand-name">Startup <strong>Analyzer</strong></span>
+            </a>
+            <p>Research smarter. Build with context.</p>
+            <a class="footer-back-top" href="#home">Back to top ↑</a>
+        </div>
+    </footer>
+
+    <script src="script.js?v=5"></script>
+</body>
+</html>
