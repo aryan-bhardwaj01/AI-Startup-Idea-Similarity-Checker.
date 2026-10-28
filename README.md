@@ -68,7 +68,7 @@ The full text of these three ideas and screenshots of every run are in the [`sam
 ├── server.js              Express server, /api/analyze (matching and novelty score)
 ├── server/
 │   ├── insight.js         /api/insight (AI Insight, provider calls, fallback)
-│   └── scripts/           buildCorpus.js, validateCorpus.js, foodDeliveryTest.js, printSamples.js
+│   └── scripts/           buildCorpus.js, validateCorpus.js, foodDeliveryTest.js
 ├── public/
 │   ├── index.html
 │   ├── script.js
@@ -181,12 +181,10 @@ To stop the server, press `Ctrl + C` in the terminal.
 
 ## Team
 
-| Name | Role |
+| Name | Contribution |
 |---|---|
-| **Aryan Bhardwaj** | Project author |
-| **Krishna Rawat** | Team member |
-
-Final-year B.Tech (CSE, AI specialisation) project.
+| **Aryan Bhardwaj** | Backend and database |
+| **Krishna Rawat** | Data search and corpus building |
 
 ## License
 
